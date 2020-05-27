@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Contact FLask App</title>                 <!-- Load CSS materialize -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  </head>
+  <body>
+    <div class="navbar-fixed"> <!-- Construct the navbar and redirect to a javascript function that display and hide the divs -->
+  <nav class="green">
+  <div class="nav-wrapper container">
+    <ul class="left">
+      <li><a onclick="bloques('div_agregar')">Agregar</a></li>
+      <li><a onclick="bloques('div_modificar')">Modificar</a></li>
+      <li><a onclick="bloques('div_buscar')">Buscar</a></li>
+      <li><a onclick="bloques('div_eliminar')">Eliminar</a></li>
+      <li><a onclick="bloques('div_consultar')" onclick="consultar()">Mostrar todos</a></li>
+    </ul>
+  </div>
+</nav>
+</div>
+
+<div id="div_agregar" style="display: none;">   <!-- This is the 'add' part -->
+  <form action="/add_contact" method="POST">
+
+    <input type="text" name="fullname" placeholder="Fullname">
+    <input type="text" name="phone" placeholder="Phone">
+    <input type="text" name="email" placeholder="Email">
+    <button type="submit">Agregar</button>
+  </form>
+  <div id="resultado"></div>
+</div>
+<div id="div_modificar" style="display: none;"> <!-- This is the 'modify' part -->
+  <p>Que campo desea modificar?</p>
+  <label>
+    <input class="with-gap" name="group1" type="radio" id="radio_tel" onclick="telmail('telefono')" checked />
+    <span>Telefono</span> <br>
+  </label>
+  <label>
+    <input class="with-gap" name="group1" type="radio" id="radio_mail" onclick="telmail('email')" />
+    <span>Email</span> <br> <br>
+  </label>
+
+    <form action="/modify" method="POST" onsubmit="modificar()">
+
+      <input type="number" name="phone" id = "tel_mod" placeholder="Phone">
+      <input type="email" name="email" id = "email_mod" placeholder="Email">
+      <input type="text" name="tipo" id = "tipo" style="display: none;">
+      <input type="number" name="id" id = "idee" style="display: none;">
+      <button type="submit">Modificar</button>
+    </form>
+
+  <p>Para modificar un dato primero debera buscarlo en el siguiente apartado de busqueda, despues selecciona el elemento en la tabla <br> y en el campo anterior de telefono/email debera ingresar el nuevo dato. Despues solo presione el boton 'modificar' </p>
+  <p>La busqueda es por nombre.</p>
+  <label>Busque el dato a modificar: </label><input type="text" id = "busca_mod" onkeyup="buscar('tabla_mod', 'busca_mod')"></input> <br><br>
+  <p>Cuando encuentre el registro de click en el para modificarlo</p>
+  <table align="center" id="tabla_mod" border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Telefono</th>
+        <th>Email</th>
+    </tr>
+  </table>
+</div>
+
+<div id="div_eliminar" style="display: none;"> <!-- This is the 'delete' part -->
+  <p>La busqueda es por nombre.</p>
+  <label>Busque el dato a eliminar: </label><input type="text" id = "busca_elim" onkeyup="buscar('tabla_elim', 'busca_elim')"></input> <br><br>
+  <p>Cuando encuentre el registro de click en el para eliminarlo</p>
+  <table align="center" id="tabla_elim" border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Telefono</th>
+        <th>Email</th>
+    </tr>
+  </table>
+</div>
+
+<div id="div_buscar" style="display: none;">  <!-- This is the 'search' part -->
+  <p>La busqueda es por nombre.</p>
+  <label>Buscar: </label><input type="text" id = "busca" onkeyup="buscar('tabla_buscar', 'busca')"></input> <br><br>
+  <table align="center" id="tabla_buscar" border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Telefono</th>
+        <th>Email</th>
+    </tr>
+  </table>
+</div>
+
+<div id="div_consultar" style="display: none;">     <!-- This is the 'consultation' part -->
+  <table align="center" id="tableID" border="1" style="cursor: pointer;">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Telefono</th>
+        <th>Email</th>
+    </tr>
+  </table>
+</div>
+    {% block body %} <!-- This block is like the join to the index.html -->
+    {% endblock %}
+
+  </body>
+</html>
